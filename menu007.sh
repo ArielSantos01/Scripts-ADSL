@@ -1,10 +1,9 @@
 #!/bin/bash
-# menu008.sh
-# Consultar Espacio Ocupado FileSystems
+# menu007.sh
+# Consultar ingresos de un Usuario
 # Grupo 4 ASL
-# 09/10/2023
+# 04/10/2023
 #
-
 while :
  do
    clear 
@@ -18,18 +17,26 @@ while :
    echo "UTN FRM                                                                         "
    echo "ASL 2023                                                     Menu de Operaciones"
    echo " "
-   echo "                            1) Ver el Espacio Ocupado por cada FileSystem"
+   echo "                            1) Consultar los Últimos Ingresos de un Usuario"        
    echo "                            2) Menu Anterior"
    echo " "
    echo -n "                                    Ingrese su opcion: "
    read opcion
    case $opcion in
-      1) 
-         echo " "
+      1)
+	 echo " "
          tput cup 12 0
-	 clear
-         df -h | awk 'NR>1 {print $6"\t"$3}' | less;;
-	 
+         echo -n "Ingrese Nombre del Usuario: "
+         read usuario
+         if cat /etc/passwd | grep -q "$usuario"
+           then
+	     clear
+             last -n 10 "$usuario" | awk 'NR<=10 {print NR" - "$0}' | less
+           else
+             echo -n "El usuario no existe. Presione ENTER para continuar."
+             read enter
+         fi;;
+
       2)
          exit;;       
       *)

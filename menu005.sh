@@ -4,6 +4,27 @@
 # Grupo 4 ASL
 # 04/10/2023
 #
+
+copia(){
+    LOGFILE="/etc/log/logcopiadia/$(date +%Y%m%d).log"
+
+    if ! test -d /etc/log/logcopiadia
+    then
+      echo "No existe el directorio /etc/log/logcopiadia. Presione ENTER para continuar."
+      read enter
+      exit 1
+    fi
+
+    find "$1" | cpio -ovcO "$2" 1> "$LOGFILE" 2> "$LOGFILE"
+      if [ $? -eq 0 ]
+      then
+        echo "Se realizó la copia exitosamente. Presione ENTER para continuar."
+      else
+        echo "La operación ha falado. Presione ENTER para continuar."
+      fi
+      read enter
+}
+
 while :
  do
    clear
@@ -24,27 +45,27 @@ while :
    echo -n "                                    Ingrese su opcion: "
    read opcion
    case $opcion in
-	   1)
+     1)
        echo "Ingrese el nombre del directorio a respaldar (Path Completo)"
        read directorio
-       if test -d $directorio
+       if test -d "$directorio"
          then
-           echo "Ingrese la ruta donde está montada la cinta"
+	   echo "Ingrese el nombre del archivo destino al que se copiara (Path Completo)"
            read cinta
-           if test -d $cinta
-             then
-               LOGFILE="/etc/log/logcopiadia/`date +%Y%m%d`.log"
-		ARCHIVO="$cinta/copia`date +%Y%m%d`"
-               find $directorio | cpio -ovcO $ARCHIVO 1>$LOGFILE 2>$LOGFILE
-	       echo "Listo"
-	       sleep 22
-             else
-               echo "No se encontró la cinta especificada. Presione ENTER para continuar."
-	       read enter
-           fi
-         else
-	   echo -n "No existe el directorio especificado. Presione ENTER para continuar"
-           read enter
+	   if test -f "$cinta"
+	   then
+	     echo "¿Desea sobreescribir el archivo? (S/N)"
+	     read -d respuesta
+	     case "$respuesta" in
+	       S|s) copia "$directorio" "$cinta";;
+	         *) exit 1;;
+	     esac
+           else  
+	     copia "$directorio" "$cinta"
+	   fi
+          else 
+	     echo -n "No existe el directorio especificado. Presione ENTER para continuar"
+             read enter
        fi;;
      3)
        exit;;

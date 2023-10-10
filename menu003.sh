@@ -3,6 +3,7 @@
 # Copiar un Archivo
 # Grupo 4 ASL
 # 04/10/2023
+
 hacecopia()
 {
 cp $archivoori $archivodes
@@ -10,18 +11,17 @@ echo " "
 echo "Programa copiado..."
 sleep 2
 }
+
 #
 while :
  do
    clear
- 
-  tput cup 1 0
+   tput cup 1 0
    echo "Usuario: $LOGNAME"
    tput cup 1 25
    echo "Terminal: `tty`"
    tput cup 1 65
- 
-  echo "Fecha: `date +%d/%m/%y`"
+   echo "Fecha: `date +%d/%m/%y`"
    tput cup 2 0
    echo "UTN FRM                                                                         "
    echo "ASL 2023                                                     Menu de Operaciones"
@@ -33,19 +33,16 @@ while :
    read opcion
    case $opcion in
       1)
- 
-        echo " "
+         echo " "
          tput cup 12 0
          echo -n "Ingrese Nombre Archivo Origen (Path Completo) : "
          read archivoori
-    
-     if test -f $archivoori
+         if test -f $archivoori
            then
              tput cup 14 0
              echo -n "Ingrese Nombre Archivo Destino (Path Completo): "
              read archivodes
-    
-         if test -f $archivodes
+             if test -f $archivodes
                then
                  tput cup 16 0
                  echo -n "El archivo $archivodes ya Existe. Lo Sobreescribe? (S/N): "

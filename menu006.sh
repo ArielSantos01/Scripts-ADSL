@@ -1,10 +1,9 @@
 #!/bin/bash
-# menu008.sh
-# Consultar Espacio Ocupado FileSystems
+# menu006.sh
+# Modificar Contraseña de un Usuario
 # Grupo 4 ASL
 # 09/10/2023
 #
-
 while :
  do
    clear 
@@ -18,7 +17,7 @@ while :
    echo "UTN FRM                                                                         "
    echo "ASL 2023                                                     Menu de Operaciones"
    echo " "
-   echo "                            1) Ver el Espacio Ocupado por cada FileSystem"
+   echo "                            1) Modificar Contraseña de un Usuario"        
    echo "                            2) Menu Anterior"
    echo " "
    echo -n "                                    Ingrese su opcion: "
@@ -27,9 +26,15 @@ while :
       1) 
          echo " "
          tput cup 12 0
-	 clear
-         df -h | awk 'NR>1 {print $6"\t"$3}' | less;;
-	 
+         echo -n "Ingrese Nombre del Usuario: "
+         read usuario    
+         if cat /etc/passwd | grep -q "$usuario"
+           then
+             passwd $usuario
+           else
+             echo -n "El usuario no existe. Presione ENTER para continuar."
+             read enter
+         fi;;
       2)
          exit;;       
       *)

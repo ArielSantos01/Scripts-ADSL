@@ -19,19 +19,20 @@ while :
     tput cup 2 0
     echo "UTN FRM                                                                         "
     echo "ASL 2023                                                     Menu de Operaciones"
-   echo " "
+    echo " "
     echo "                      1) Ver Contenido de Directorio"
-   echo "                      2) Ver Contenido de Archivo"
+    echo "                      2) Ver Contenido de Archivo"
     echo "                      3) Copiar un Archivo"
     echo "                      4) Renombrar un Archivo"
     echo "                      5) Copiar Directorio a Cinta"
     echo "                      6) Modificar Contraseña de un Usuario"
     echo "                      7) Ver Ingresos de Usuario"
     echo "                      8) Ver Espacio Ocupado por Sistema de Archivos"
-   echo "                      9) Salida"
+    echo "                      9) Salida"
     echo " "
     echo -n "                                    Ingrese su opcion: "
     read opcion
+
     case $opcion in
       1)
         ./menu001.sh;;
