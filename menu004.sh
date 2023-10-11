@@ -3,6 +3,7 @@
 # Renombrar un Archivo
 # Grupo 4 ASL
 # 04/10/2023
+
 renombra()
 {
 mv $archivoori $archivodes
@@ -10,6 +11,7 @@ echo " "
 echo "Programa Renombrado..."
 sleep 2
 }
+
 #
 while :
  do

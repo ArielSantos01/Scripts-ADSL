@@ -7,12 +7,12 @@
 while :
  do
    clear
-  tput cup 1 0
+   tput cup 1 0
    echo "Usuario: $LOGNAME"
    tput cup 1 25
    echo "Terminal: `tty`"
    tput cup 1 65
-  echo "Fecha: `date +%d/%m/%y`"
+   echo "Fecha: `date +%d/%m/%y`"
    tput cup 2 0
    echo "UTN FRM                                                                         "
    echo "ASL 2023                                                     Menu de Operaciones"
@@ -25,17 +25,18 @@ while :
    read opcion
    case $opcion in
       1)
-        echo " "
+         echo " "
          tput cup 12 0
          echo -n "Ingrese Nombre Archivo (Path Completo): "
          read archivo
-        if test -f $archivo
-          then
+         if test -f $archivo
+           then
              less $archivo
            else
              echo -n "No existe el archivo especificado. Presione ENTER para continuar"
              read enter
          fi;;
+
       2)
          echo " "
          tput cup 12 0
