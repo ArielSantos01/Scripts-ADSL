@@ -5,23 +5,18 @@
 # 04/10/2023
 #
 
-copia(){
-    LOGFILE="/etc/log/logcopiadia/$(date +%Y%m%d).log"
-
-    if ! test -d /etc/log/logcopiadia
-    then
-      echo "No existe el directorio /etc/log/logcopiadia. Presione ENTER para continuar."
-      read enter
-      exit 1
-    fi
-
-    find "$1" | cpio -ovcO "$2" 1> "$LOGFILE" 2> "$LOGFILE"
+copiar(){
+    #$1 - Lista de archivos
+    #$2 - Archivo Cinta
+      LOGFILE="/etc/log/logcopiadia/$(date +%Y%m%d%H%M).log"
+      find $1 | cpio -ovcO "$2" 1> "$LOGFILE" 2> "$LOGFILE"
       if [ $? -eq 0 ]
       then
         echo "Se realizó la copia exitosamente. Presione ENTER para continuar."
       else
-        echo "La operación ha falado. Presione ENTER para continuar."
+        echo "La operación ha fallado. Presione ENTER para continuar."
       fi
+      echo "Logfile: $LOGFILE"
       read enter
 }
 
@@ -39,35 +34,43 @@ while :
    echo "ASL 2023                                                     Menu de Operaciones"
    echo " "
    echo "                      1) Respaldar un Directorio"
-   echo "                      2) Respaldar Múltiples Directorios"
-   echo "                      3) Menu Anterior"
+   echo "                      2) Menu Anterior"
    echo " "
    echo -n "                                    Ingrese su opcion: "
    read opcion
    case $opcion in
      1)
+
+       if ! test -d /etc/log/logcopiadia
+       then
+         echo "Es necesario crear el directorio /etc/log/logcopiadia. Presione ENTER para continuar."
+         read enter
+         exit 1
+       fi
+
        echo "Ingrese el nombre del directorio a respaldar (Path Completo)"
        read directorio
        if test -d "$directorio"
          then
-	   echo "Ingrese el nombre del archivo destino al que se copiara (Path Completo)"
-           read cinta
+	   echo "Ingrese el nombre del archivo de la cinta al que se copiara (Path Completo)"
+           read -r cinta
 	   if test -f "$cinta"
 	   then
 	     echo "¿Desea sobreescribir el archivo? (S/N)"
-	     read -d respuesta
+	     read respuesta
 	     case "$respuesta" in
-	       S|s) copia "$directorio" "$cinta";;
+	       S|s) 
+		   copiar "$directorio" "$cinta";;
 	         *) exit 1;;
 	     esac
            else  
-	     copia "$directorio" "$cinta"
+	     copiar "$directorio" "$cinta"
 	   fi
           else 
 	     echo -n "No existe el directorio especificado. Presione ENTER para continuar"
              read enter
        fi;;
-     3)
+     2)
        exit;;
      *)
        echo "Opción Inválida..."

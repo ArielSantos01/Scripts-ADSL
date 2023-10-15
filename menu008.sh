@@ -28,7 +28,7 @@ while :
          echo " "
          tput cup 12 0
 	 clear
-         df -h | awk 'NR>1 {print $6"\t"$3}' | less;;
+         df -h | awk 'NR>1 {print $6"\t-\t"$3}' | less;;
 	 
       2)
          exit;;       
